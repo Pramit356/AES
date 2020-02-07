@@ -1,5 +1,4 @@
 from nltk import pos_tag, wordnet as wn
-from Dictionary.usedictionary import in_trie, find_correct_words
 from nltk.corpus import wordnet, stopwords
 from nltk.tokenize import word_tokenize
 

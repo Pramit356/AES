@@ -14,7 +14,7 @@ def remove_punctuations(essay, pos_list):
     return cleaned_essay, pos_list1
 
 def remove_stopwords(essay, txt):
-    useful_tag_initials = ['R', 'N', 'V', 'J']
+    useful_tag_initials = ['R', 'N', 'V', 'J', 'P']
     pos_list = pos_tag(essay)
 
     essay, pos_list1 = remove_punctuations(essay, pos_list)
@@ -45,9 +45,8 @@ def remove_stopwords(essay, txt):
     print('len1: ', len(essay))
     for word in pos_list1:
         ind = essay.index(word[0])
-        if word[1][0] not in useful_tag_initials and word[1]!='RP':
+        if word[1][0] not in useful_tag_initials and word[1][0]!='.':
             essay.remove(word[0])
     print('len2: ', len(essay))
-    print(essay)
 
     return essay, pos_list, pos_list1

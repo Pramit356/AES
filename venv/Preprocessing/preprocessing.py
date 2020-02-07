@@ -4,6 +4,7 @@ from lemmatization import lemmatize , lemmatize1
 from checkstructures import sentence_proportion, check_punctuations_capitalization
 from grammar3 import check_grammatical_errors
 import time
+import pickle
 
 start = time.time()
 score = 100
@@ -30,8 +31,13 @@ print("Score after sentence proportions: ", score)
 score = check_punctuations_capitalization(pos_list_punctuations, score)
 print("Score after punctuations checker: ", score)
 
+score = check_grammatical_errors(pos_list_punctuations, pos_list_grammar, score)
+print("Score after grammar checking: ", score)
 
-print("Score after grammar checking: ", check_grammatical_errors(pos_list_punctuations, pos_list_grammar, score))
+useful = [cleaned_essay, score, pos_list_grammar, pos_list_punctuations]
+with open("preliminary_results.txt", "wb") as myFile:
+    pickle.dump(useful, myFile)
+
 
 end = time.time()
 print(end-start)
