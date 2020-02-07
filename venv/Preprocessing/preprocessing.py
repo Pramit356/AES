@@ -8,7 +8,7 @@ import pickle
 
 start = time.time()
 score = 100
-f = open("Dictionary/input2.txt", "r")
+f = open("Dictionary/input2.txt", "r", encoding="utf8")
 txt = f.read()
 f.close()
 essay, score = spellcheck_and_correct(txt, score)
