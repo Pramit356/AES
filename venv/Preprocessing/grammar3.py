@@ -37,7 +37,7 @@ def find_noun_pronoun(index, leniency, lst):
 def sentence_structure_errors(pos_list_grammar):
     tot_errors = 0
     tags_in_sentences = form_sentences(pos_list_grammar)
-    print(tags_in_sentences)
+    #print(tags_in_sentences)
     for each_sentence in tags_in_sentences:
         errors = 0
         if 'V' not in list_from_first_el(0, each_sentence, 'front'):
@@ -57,7 +57,7 @@ def sentence_structure_errors(pos_list_grammar):
                     isJustified = True
                 elif i!=0 and ('PRP' in each_sentence[i-1] or 'PRP$' in each_sentence[i-1]):
                     isJustified = True
-                elif i!=0 and each_sentence[i-1][0] == 'J' or (i!=1 and each_sentence[i-2][0] == 'J'):
+                elif i!=0 and each_sentence[i-1][0] == 'J' or (i>1 and each_sentence[i-2][0] == 'J'):
                     if each_sentence[i-1] == 'JJR' or each_sentence[i] == 'JJR':
                         isJustified = False
                     else:
@@ -83,7 +83,10 @@ def sentence_structure_errors(pos_list_grammar):
                         break
                 if isJustified == False:
                     errors+=1
-        tot_errors+=errors
+        if errors<=2:
+            tot_errors+=errors
+        else:
+            tot_errors+=2
     return tot_errors
 
 def check_verbal_agreement(essay, proximity):
@@ -150,8 +153,8 @@ def check_grammatical_errors(pos_list_with_punctuations, pos_list_without_punctu
     if incorrect > 0 and incorrect <= 4:
         score -= incorrect
     elif (incorrect > 4 and incorrect <= 14):
-        score -= 2 * (incorrect - 4) + 4
-    elif incorrect > 14:
-        score -= 20
+        score -= (incorrect - 4)
+    elif incorrect > 29:
+        score -= 25
     return score
 

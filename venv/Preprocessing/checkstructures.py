@@ -10,10 +10,10 @@ def sentence_proportion(essay, score):
         else:
             if word not in punctuations:
                 ct+=1
-    if mistakes>20:
+    if mistakes>40:
         score-=20
     else:
-        score-=mistakes
+        score-=(mistakes/2)
     return score
 
 
@@ -49,7 +49,7 @@ def check_punctuations_capitalization(pos_list, score):
                     if pos_list[i+1][1] in ['NNP', 'NNPS']:
                         j=i+1
                         verbInside = False
-                        while(pos_list[j][0]!='.'):
+                        while(j<len(pos_list)-1 and pos_list[j][0]!='.'):
                             if pos_list[j][1][0] == 'V':
                                 verbInside = True
                                 break
@@ -121,5 +121,10 @@ def check_punctuations_capitalization(pos_list, score):
 
     if pos_list[len(pos_list)-1][0] != '.' or hasSeenVerb == False:
         mistakes += 1
-    print('Mistakes: ', mistakes)
-    return score - mistakes
+    #print('Mistakes: ', mistakes)
+    if mistakes < 4:
+        return score
+    elif mistakes >= 4 and mistakes < 29:
+        return score - mistakes + 4
+    else:
+        return score - 25

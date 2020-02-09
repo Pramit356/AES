@@ -24,7 +24,7 @@ def lemmatize(essay):
             word3 = lemma.lemmatize(word2, pos = "a")
             lemma_word.append(word3)
 
-    print()
+    #print()
     # print('lemmatization')
     # print(lemma_word)
     return lemma_word

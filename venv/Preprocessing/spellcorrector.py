@@ -1,7 +1,7 @@
 import re
 import pickle
 import enchant
-from Dictionary.usedictionary import in_trie, find_correct_words
+from Preprocessing.Dictionary.usedictionary import in_trie, find_correct_words
 import time
 
 def is_number(n):
@@ -27,16 +27,43 @@ def splitter_on_single_quotes(essay):
             new_essay.append(word)
     return new_essay
 
+def remove_empty_el(essay):
+    clean_essay = []
+    for el in essay:
+        if el not in ["", " "]:
+            clean_essay.append(el)
+    return clean_essay
+
+def check_incorrect(essay):
+    new_essay = []
+    for word in essay:
+        if is_number(word[0]):
+            isNumber = True
+        else:
+            isNumber = False
+        acceptable = True
+        for i in range(1,len(word)):
+            if is_number(word[i])!=isNumber:
+                acceptable=False
+        if acceptable==True:
+            new_essay.append(word)
+    return new_essay
+
 
 def spellcheck_and_correct(raw_essay, score):
     punctuations = ["'", '"', '.', ',', '?', '!']
-    print(raw_essay)
+    #print(raw_essay)
     essay = re.findall(r"@?[\w']+|[.,!?;'\"]", raw_essay)
     #essay = re.findall(r"@?[\w+][\w']+|[.,!?;'\"]", raw_essay)
     essay = splitter_on_single_quotes(essay)
-    #essay = re.findall(r"@?\w+", raw_essay)
-    print(essay)
-    with open("Dictionary/savedict.txt", "rb") as myFile:
+    essay = remove_empty_el(essay)
+    essay = check_incorrect(essay)
+    if "" in essay:
+        print("hhaahha")
+    # for el in essay:
+    #     print(el)
+    #print(essay)
+    with open("Preprocessing/Dictionary/savedict.txt", "rb") as myFile:
         trie = pickle.load(myFile)
     misswords = []
     incorrect_index = []
@@ -47,13 +74,13 @@ def spellcheck_and_correct(raw_essay, score):
     # Checking for incorrect words
     for i in range(len(essay)):
         el = essay[i]
-        if '@' not in el and is_number(el) == False and el not in punctuations:
+        if '@' not in el and is_number(el) == False and el not in punctuations and el not in [" ", ""]:
             isthere = in_trie(trie, el.lower())
             if (isthere == False):
                 misswords.append(el)
                 incorrect_index.append(i)
-    print('incorrect spelling')
-    print(misswords)
+    #print('incorrect spelling')
+    #print(misswords)
 
     # Find correct replacement for words
     # to_use_dict = input("Enter the dictionary (US or UK): ")
@@ -65,8 +92,8 @@ def spellcheck_and_correct(raw_essay, score):
         dictionaryUK = enchant.Dict("en_UK")
         corrected_words = find_correct_words((misswords, dictionaryUK))
 
-    print('closest corrected words')
-    print(corrected_words)
+    #print('closest corrected words')
+    #print(corrected_words)
 
     incorrect = len(list(set(corrected_words)))
     for i in range(len(corrected_words)):
@@ -80,9 +107,9 @@ def spellcheck_and_correct(raw_essay, score):
         score -= 2 * (incorrect - 4) + 4
     elif incorrect > 14:
         score -= 20
-    print(score)
+    #print(score)
 
-    print()
+    #print()
     for i in range(len(corrected_words)):
         essay[incorrect_index[i]] = corrected_words[i]
     # Replacement done

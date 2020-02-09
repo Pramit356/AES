@@ -13,8 +13,18 @@ def remove_punctuations(essay, pos_list):
         pos_list1.append(pos_tag)
     return cleaned_essay, pos_list1
 
-def remove_stopwords(essay, txt):
+def remove_empty_el(essay):
+    clean_essay = []
+    for el in essay:
+        if el not in ["", " "]:
+            clean_essay.append(el)
+    return clean_essay
+
+def remove_stopwords(essay):
     useful_tag_initials = ['R', 'N', 'V', 'J', 'P']
+    # for word in essay:
+    #     print(pos_tag([word]))
+    essay = remove_empty_el(essay)
     pos_list = pos_tag(essay)
 
     essay, pos_list1 = remove_punctuations(essay, pos_list)
@@ -42,11 +52,11 @@ def remove_stopwords(essay, txt):
     # print("\n\nFiltered Sentence \n\n")
     # print(" ".join(filtered_sentence))
 
-    print('len1: ', len(essay))
+    print('length of essay: ', len(essay))
     for word in pos_list1:
         ind = essay.index(word[0])
         if word[1][0] not in useful_tag_initials and word[1][0]!='.':
             essay.remove(word[0])
-    print('len2: ', len(essay))
+    #print('len2: ', len(essay))
 
     return essay, pos_list, pos_list1
