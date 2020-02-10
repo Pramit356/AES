@@ -54,12 +54,9 @@ def spellcheck_and_correct(raw_essay, score):
     punctuations = ["'", '"', '.', ',', '?', '!']
     #print(raw_essay)
     essay = re.findall(r"@?[\w']+|[.,!?;'\"]", raw_essay)
-    #essay = re.findall(r"@?[\w+][\w']+|[.,!?;'\"]", raw_essay)
     essay = splitter_on_single_quotes(essay)
     essay = remove_empty_el(essay)
     essay = check_incorrect(essay)
-    if "" in essay:
-        print("hhaahha")
     # for el in essay:
     #     print(el)
     #print(essay)
@@ -113,5 +110,4 @@ def spellcheck_and_correct(raw_essay, score):
     for i in range(len(corrected_words)):
         essay[incorrect_index[i]] = corrected_words[i]
     # Replacement done
-
     return essay, score

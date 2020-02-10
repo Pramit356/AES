@@ -3,7 +3,7 @@ from nltk.corpus import wordnet, stopwords
 from nltk.tokenize import word_tokenize
 
 def remove_punctuations(essay, pos_list):
-    punctuations = ["'", '"', ',', '?', '!']
+    punctuations = ["'", '"', ',']
     cleaned_essay = []
     pos_list1 = []
     for word, pos_tag in zip(essay, pos_list):
@@ -25,10 +25,11 @@ def remove_stopwords(essay):
     # for word in essay:
     #     print(pos_tag([word]))
     essay = remove_empty_el(essay)
+    #print(essay)
     pos_list = pos_tag(essay)
 
     essay, pos_list1 = remove_punctuations(essay, pos_list)
-
+    #print(essay)
     #These LOC fail in remote cases
     # print()
     # # set of stop words
@@ -51,12 +52,14 @@ def remove_stopwords(essay):
     #
     # print("\n\nFiltered Sentence \n\n")
     # print(" ".join(filtered_sentence))
+    #print("FA: ", essay)
 
     print('length of essay: ', len(essay))
     for word in pos_list1:
         ind = essay.index(word[0])
-        if word[1][0] not in useful_tag_initials and word[1][0]!='.':
-            essay.remove(word[0])
+        if word[1][0] not in useful_tag_initials:
+            if word[0] not in ['.', '!', '?']:
+                essay.remove(word[0])
     #print('len2: ', len(essay))
-
+    #print(essay)
     return essay, pos_list, pos_list1

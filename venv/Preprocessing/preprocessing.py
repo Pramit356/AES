@@ -17,12 +17,10 @@ def pre_process(txt, score):
     essay, score = spellcheck_and_correct(txt, score)
     #print("Score after spell check: ",score)
     #print("Essay after spell checking and correction: ",essay)
-
     cleaned_essay, pos_list_punctuations, pos_list_grammar = remove_stopwords(essay)
     #print("Essay after stopword removal: ", cleaned_essay)
 
     #print(pos_list_punctuations)
-
 
     cleaned_essay = lemmatize(cleaned_essay)
     #print("Essay after lemmatization: ", cleaned_essay)
@@ -40,7 +38,7 @@ def pre_process(txt, score):
     with open("preliminary_results.txt", "wb") as myFile:
         pickle.dump(useful, myFile)
 
-    cleaned_essay = rem_full_stop(cleaned_essay)
+    #cleaned_essay = rem_full_stop(cleaned_essay)
     return cleaned_essay, score
 
     #end = time.time()
