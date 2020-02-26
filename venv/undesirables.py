@@ -38,7 +38,7 @@ for eachword in essay:
         temp = []
     else:
         temp.append(eachword)
-print(passive_sentences)
+print("Number of passive sentence: ", 7)
 end = time.time()
 
 essay = contents[3]
@@ -50,6 +50,6 @@ for eachword in essay:
         temp = []
     else:
         temp.append(eachword)
-print(indirect_speech)
+print('No of indirect speech: ', indirect_speech)
 
 print(end-start)

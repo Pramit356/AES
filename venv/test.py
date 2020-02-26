@@ -1,16 +1,12 @@
-# import csv
+import math
+
+# def normalized_vector(vector):
+#     den = math.sqrt(sum(map(lambda val : val * val, vector)))
+#     return [eachel / den for eachel in vector]
 #
-# def listToString(s):
-#     str1 = " "
-#     return (str1.join(s))
-#
-# lst = ['word1', 'word2', 'word3']
-# str1 = listToString(lst)
-# print(str1)
-#
-# with open("testing.csv", "w", newline="") as f:
-#     writer = csv.writer(f, quoting=csv.QUOTE_ALL)
-#     writer.writerow([str1])
+# vec = [1,0,1,0,1,1]
+# print(normalized_vector(vec))
+
 
 from Preprocessing.preprocessing import pre_process
 f = open("testinput", "r", encoding="utf8")

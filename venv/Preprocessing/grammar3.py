@@ -1,6 +1,3 @@
-import language_check
-import unicodedata
-
 def form_sentences(pos_list):
     temp = []
     sentences_tags = []
@@ -57,7 +54,12 @@ def sentence_structure_errors(pos_list_grammar):
                     isJustified = True
                 elif i!=0 and ('PRP' in each_sentence[i-1] or 'PRP$' in each_sentence[i-1]):
                     isJustified = True
-                elif i!=0 and each_sentence[i-1][0] == 'J' or (i>1 and each_sentence[i-2][0] == 'J'):
+                elif i!=0 and each_sentence[i-1][0] == 'J':
+                    if each_sentence[i-1] == 'JJR' or each_sentence[i] == 'JJR':
+                        isJustified = False
+                    else:
+                        isJustified = True
+                elif i>1 and each_sentence[i-2][0] == 'J':
                     if each_sentence[i-1] == 'JJR' or each_sentence[i] == 'JJR':
                         isJustified = False
                     else:
@@ -150,9 +152,7 @@ def check_grammatical_errors(pos_list_with_punctuations, pos_list_without_punctu
     incorrect = 0
     incorrect += sentence_structure_errors(pos_list_without_punctuaions)
     incorrect += check_verbal_agreement(pos_list_with_punctuations, 4)
-    if incorrect > 0 and incorrect <= 4:
-        score -= incorrect
-    elif (incorrect > 4 and incorrect <= 14):
+    if (incorrect > 4 and incorrect <= 29):
         score -= (incorrect - 4)
     elif incorrect > 29:
         score -= 25

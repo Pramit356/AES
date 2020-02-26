@@ -3,7 +3,7 @@ def sentence_proportion(essay, score):
     ct = 0
     mistakes = 0
     for word in essay:
-        if(word=='.'):
+        if(word in ['.', '?']):
             if(ct<8 or ct>20):
                 mistakes+=1
             ct = 0
